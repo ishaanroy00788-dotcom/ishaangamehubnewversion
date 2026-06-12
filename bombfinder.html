@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bomb Finder</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin:25px auto;
+    max-width:350px;
+}
+
+.box{
+    height:90px;
+    background:#334155;
+    border-radius:15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:35px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.box:hover{
+    transform:scale(1.05);
+}
+
+@media(max-width:768px){
+
+    .box{
+        height:80px;
+        font-size:30px;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="game-box">
+
+<h1>💣 Bomb Finder</h1>
+
+<h3>
+🏆 Score:
+<span id="score">0</span>
+</h3>
+
+<div class="grid">
+
+<div class="box" onclick="openBox(0)">?</div>
+<div class="box" onclick="openBox(1)">?</div>
+<div class="box" onclick="openBox(2)">?</div>
+
+<div class="box" onclick="openBox(3)">?</div>
+<div class="box" onclick="openBox(4)">?</div>
+<div class="box" onclick="openBox(5)">?</div>
+
+<div class="box" onclick="openBox(6)">?</div>
+<div class="box" onclick="openBox(7)">?</div>
+<div class="box" onclick="openBox(8)">?</div>
+
+</div>
+
+<h2 id="result">Find the coins 💰</h2>
+
+<button class="play-btn" onclick="newRound()">
+🔄 New Round
+</button>
+
+<button class="back-btn"
+onclick="location.href='home.html'">
+← Back
+</button>
+
+</div>
+
+<script>
+
+let score = 0;
+let bombPosition;
+let gameOver = false;
+
+newRound();
+
+function newRound(){
+
+bombPosition =
+Math.floor(Math.random()*9);
+
+gameOver = false;
+
+document.getElementById("result").innerHTML =
+"Find the coins 💰";
+
+let boxes =
+document.querySelectorAll(".box");
+
+boxes.forEach(box=>{
+
+box.innerHTML="?";
+box.style.background="#334155";
+
+});
+
+}
+
+function openBox(index){
+
+if(gameOver) return;
+
+let boxes =
+document.querySelectorAll(".box");
+
+if(boxes[index].innerHTML !== "?"){
+return;
+}
+
+if(index === bombPosition){
+
+boxes[index].innerHTML = "💣";
+boxes[index].style.background =
+"#ef4444";
+
+document.getElementById("result").innerHTML =
+"💥 BOOM! Game Over";
+
+gameOver = true;
+
+}
+else{
+
+boxes[index].innerHTML = "💰";
+
+boxes[index].style.background =
+"#22c55e";
+
+score += 10;
+
+document.getElementById("score").innerText =
+score;
+
+document.getElementById("result").innerHTML =
+"🎉 Coin Found! +10";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

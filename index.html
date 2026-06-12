@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ishaan Game Hub Login</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<div class="game-box">
+
+    <h1>🎮 Ishaan Game Hub🎮 </h1>
+
+    <h2>Welcome Back</h2>
+
+    <p>Login to continue</p>
+
+    <input
+        type="text"
+        id="username"
+        placeholder="Enter Your Name"
+    >
+
+    <br><br>
+
+    <button class="play-btn" onclick="login()">
+        🚀 Enter Game Hub
+    </button>
+
+    <h3 id="msg"></h3>
+
+</div>
+
+<script>
+
+function login(){
+
+    let name =
+    document.getElementById("username").value.trim();
+
+    if(name === ""){
+
+        document.getElementById("msg").innerHTML =
+        "⚠ Please enter your name";
+
+        return;
+    }
+
+    localStorage.setItem(
+        "playerName",
+        name
+    );
+
+    window.location.href =
+    "home.html";
+}
+
+</script>
+
+</body>
+</html>

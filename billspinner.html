@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bill Spinner</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.wheel-container{
+    width:300px;
+    height:300px;
+    margin:30px auto;
+    position:relative;
+}
+
+.pointer{
+    position:absolute;
+    top:-20px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:40px;
+    z-index:10;
+}
+
+.wheel{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    border:8px solid white;
+    background:conic-gradient(
+        #3b82f6 0deg 120deg,
+        #ef4444 120deg 240deg,
+        #22c55e 240deg 360deg
+    );
+    transition:transform 4s ease-out;
+}
+
+.players{
+    margin-top:20px;
+    font-size:22px;
+    line-height:50px;
+}
+
+#result{
+    margin-top:25px;
+    font-size:32px;
+    font-weight:bold;
+}
+
+@media(max-width:768px){
+
+    .wheel-container{
+        width:250px;
+        height:250px;
+    }
+
+    .players{
+        font-size:18px;
+    }
+
+    #result{
+        font-size:24px;
+    }
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="game-box">
+
+<h1>💸 Bill Payer Spinner</h1>
+
+<input
+type="text"
+id="name1"
+placeholder="Friend 1 Name"
+>
+
+<br><br>
+
+<input
+type="text"
+id="name2"
+placeholder="Friend 2 Name"
+>
+
+<br><br>
+
+<input
+type="text"
+id="name3"
+placeholder="Friend 3 Name"
+>
+
+<div class="wheel-container">
+
+<div class="pointer">🔻</div>
+
+<div class="wheel" id="wheel"></div>
+
+</div>
+
+<div class="players">
+
+🔵 <span id="p1">Friend 1</span><br>
+
+🔴 <span id="p2">Friend 2</span><br>
+
+🟢 <span id="p3">Friend 3</span>
+
+</div>
+
+<br>
+
+<button class="play-btn" onclick="spinWheel()">
+🎡 Spin Wheel
+</button>
+
+<button
+class="back-btn"
+onclick="location.href='home.html'"
+>
+← Back
+</button>
+
+<h2 id="result"></h2>
+
+</div>
+
+<script>
+
+let spinning = false;
+
+function spinWheel(){
+
+if(spinning) return;
+
+let name1 =
+document.getElementById("name1").value.trim();
+
+let name2 =
+document.getElementById("name2").value.trim();
+
+let name3 =
+document.getElementById("name3").value.trim();
+
+if(
+name1 === "" ||
+name2 === "" ||
+name3 === ""
+){
+alert("Enter all 3 names");
+return;
+}
+
+document.getElementById("p1").innerText =
+name1;
+
+document.getElementById("p2").innerText =
+name2;
+
+document.getElementById("p3").innerText =
+name3;
+
+spinning = true;
+
+const wheel =
+document.getElementById("wheel");
+
+const random =
+Math.floor(Math.random()*3);
+
+let loser;
+
+if(random === 0){
+loser = name1;
+}
+else if(random === 1){
+loser = name2;
+}
+else{
+loser = name3;
+}
+
+const angles = [
+300,
+180,
+60
+];
+
+const rotation =
+3600 + angles[random];
+
+wheel.style.transform =
+"rotate(" + rotation + "deg)";
+
+document.getElementById("result").innerHTML =
+"🎡 Spinning...";
+
+setTimeout(()=>{
+
+document.getElementById("result").innerHTML =
+"💸 <b>" +
+loser +
+"</b> Will Pay The Bill 😂";
+
+spinning = false;
+
+},4000);
+
+}
+
+</script>
+
+</body>
+</html>
